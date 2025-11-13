@@ -45,7 +45,7 @@ proxy-providers:
 ├── config.yaml              # 主配置文件
 ├── clash.config             # akashaproxy 配置
 ├── proxies/                 # 代理订阅文件
-│   └── ZhuRi.yaml
+│   └── Name.yaml
 ├── rule_providers/          # 在线订阅规则
 │   └── Ads.yaml            # 广告拦截规则
 └── rules/                   # 本地自定义规则
@@ -151,4 +151,5 @@ A:
 
 **配置优化时间**: 2025-11-13  
 **Clash Meta 版本**: mihomo  
+
 **代理工具**: akashaproxy  
