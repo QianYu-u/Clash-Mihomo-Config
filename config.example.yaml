@@ -1,0 +1,21 @@
+# 这是配置文件示例
+# 使用方法：
+# 1. 复制此文件为 config.yaml
+# 2. 修改 proxy-providers 中的订阅链接
+# 3. 根据需要调整代理组和规则
+
+# 完整配置请参考 config.yaml
+# 敏感信息（订阅链接）请自行填写
+
+proxy-providers:
+  你的机场名:
+    type: http
+    interval: 1800
+    health-check:
+      enable: true
+      url: https://cp.cloudflare.com/generate_204
+      interval: 300
+    url: "在这里填写你的订阅链接"
+    path: ./proxies/你的机场名.yaml
+
+# 其他配置与 config.yaml 相同

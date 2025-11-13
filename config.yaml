@@ -1,0 +1,440 @@
+#http-port: 7890
+#socks-port: 7891
+mixed-port: 7895
+redir-port: 7892
+tproxy-port: 7893
+allow-lan: true
+geodata-mode: true
+unified-delay: true
+mode: rule
+log-level: info
+# false 此为不代理ipv6流量节点
+ipv6: false
+tcp-concurrent: true
+keep-alive-interval: 300
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  ASN.mmdb: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: false
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.google.com
+    - +.youtube.com
+    - +.facebook.com
+  skip-domain:
+    - Mijia Cloud
+    - +.qq.com
+    - +.baidu.com
+    - +.taobao.com
+    - +.jd.com
+    - +.alipay.com
+    - +.weixin.qq.com
+    - +.163.com
+    - +.126.com
+    - +.bilibili.com
+    - +.meituan.com
+    - +.dianping.com
+    - +.csdn.net
+    - +.cnblogs.com
+    - +.zhihu.com
+    # 注意：抖音、小红书、微博等社交媒体已移除，让其走代理以显示代理节点IP
+
+profile:
+  store-fake-ip: true
+  store-selected: true
+
+external-controller: 127.0.0.1:9090
+external-ui: zash
+bind-address: "*"
+
+# —————————
+
+tun:
+  enable: true
+  device: Meta
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+  mtu: 9000
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    # 局域网
+    - '*.lan'
+    - '*.local'
+    - '*.localdomain'
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
+    # 路由器管理
+    - '*.home.arpa'
+    - '*.router.asus.com'
+    # Windows 网络检测
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    # NTP 服务
+    - 'time.*.com'
+    - 'ntp.*.com'
+    - '+.pool.ntp.org'
+    - '+.ntp.org.cn'
+    # 腾讯系
+    - '+.qq.com'
+    - '+.tencent.com'
+    - '+.weixin.qq.com'
+    - '+.gtimg.com'
+    # 阿里系
+    - '+.taobao.com'
+    - '+.tmall.com'
+    - '+.alipay.com'
+    - '+.aliyun.com'
+    - '+.alicdn.com'
+    - '+.alibaba.com'
+    # 百度系
+    - '+.baidu.com'
+    - '+.bdstatic.com'
+    # 京东
+    - '+.jd.com'
+    - '+.360buyimg.com'
+    # 网易
+    - '+.163.com'
+    - '+.126.com'
+    - '+.netease.com'
+    # B站
+    - '+.bilibili.com'
+    - '+.hdslb.com'
+    # 抖音/字节 CDN（只让 API 走代理，CDN 走直连）
+    - '+.douyinpic.com'
+    - '+.douyinstatic.com'
+    - '+.douyinvod.com'
+    - '+.byteimg.com'
+    - '+.bytedance.com'
+    - '+.bytedns.net'
+    - '+.bytefcdn.com'
+    # 小红书 CDN
+    - '+.xhscdn.com'
+    # 微博 CDN
+    - '+.weibocdn.com'
+    - '+.weibo.cn'
+    # 拼多多（注意：抖音/字节已移除，让其走代理以显示代理 IP 归属地）
+    - '+.pinduoduo.com'
+    - '+.yangkeduo.com'
+    # 美团
+    - '+.meituan.com'
+    - '+.dianping.com'
+    # 银行
+    - '+.bank.*.cn'
+    - '+.icbc.com.cn'
+    - '+.ccb.com'
+    - '+.abchina.com'
+    - '+.boc.cn'
+    # 游戏
+    - '+.steamserver.net'
+    - '+.battlenet.com.cn'
+    - '+.blizzard.cn'
+    - '+.epicgames.cn'
+    - 'localhost.*.qq.com'
+    # STUN
+    - 'stun.*.*'
+    - 'stun.*.*.*'
+    - 'stun.*.*.*.*'
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver:
+    - https://223.5.5.5/dns-query
+    - https://120.53.53.53/dns-query
+  proxy-server-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver-policy:
+    # 机场域名直连查询
+    "+.vfbhg.cn":
+      - https://223.5.5.5/dns-query
+      - https://119.29.29.29/dns-query
+    "+.sudatech.store":
+      - https://223.5.5.5/dns-query
+      - https://119.29.29.29/dns-query
+    "+.fengwo.info":
+      - https://223.5.5.5/dns-query
+      - https://119.29.29.29/dns-query
+    
+    # Apple 域名（国内 CDN）
+    "geosite:apple":
+      - https://223.5.5.5/dns-query
+      - https://119.29.29.29/dns-query
+    
+    # 国内域名使用国内 DNS
+    "geosite:cn,private":
+      - https://223.5.5.5/dns-query
+      - https://120.53.53.53/dns-query
+    
+    # 国外域名使用代理 DNS
+    "geosite:geolocation-!cn,gfw":
+      - "https://dns.cloudflare.com/dns-query#proxy"
+      - "https://dns.google/dns-query#proxy"
+
+proxies:
+# clashMeta配置参考可以看看这个wiki
+# https://wiki.metacubex.one
+
+#预设
+p: &p
+  type: http
+  interval: 1800
+  health-check:
+    enable: true
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+
+# 代理提供(订阅)组
+# url 里填写自己的订阅,名称不能重复
+# ⚠️ 注意：请勿将订阅链接上传到公开仓库
+proxy-providers:
+  Name: #机场名
+    <<: *p
+    url: "在这里填写你的订阅链接"  # 请替换为实际订阅链接
+    path: ./proxies/Name.yaml
+
+#  示例：添加更多机场
+#  Name2: #机场名
+#    <<: *p
+#    url: "在这里填写你的订阅链接"
+#    path: ./proxies/Name2.yaml
+
+# 代理组
+proxy-groups:
+  - name: proxy
+    type: select
+    proxies:
+      - 香港
+      - 日本
+      - 新加坡
+      - 台湾
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+# 按照区域划定策略组
+  - {name: 香港, type: url-test , include-all-providers: true, filter: "^(?=.*(港|HK|hk|Hong Kong|HongKong|hongkong))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 台湾, type: url-test , include-all-providers: true, filter: "^(?=.*(台|新北|彰化|TW|Taiwan))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 日本, type: url-test , include-all-providers: true, filter: "^(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 美国, type: url-test , include-all-providers: true, filter: "^(?=.*(美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 英国, type: url-test , include-all-providers: true, filter: "^(?=.*(英国|英|UK|United Kingdom))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 新加坡, type: url-test , include-all-providers: true, filter: "^(?=.*(新加坡|坡|狮城|SG|Singapore))(?!.*(X[2-9]|扣费|倍)).*$"}
+  - {name: 其它地区, type: url-test , include-all-providers: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"}
+  - {name: 全部节点, type: url-test , include-all-providers: true}
+  - {name: 多倍节点, type: url-test , include-all-providers: true, filter: "^(?=.*(X[2-9]|扣费|倍)).*$"}
+
+  - name: 直连
+    type: select
+    proxies:
+      - DIRECT
+
+  - name: Google
+    type: select
+    proxies:
+      - 香港
+      - 日本
+      - 新加坡
+      - 台湾
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  - name: Apple
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  - name: AI
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  - name: OneDrive
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  - name: Microsoft
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+      
+  - name: Telegram
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  - name: Twitter
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 英国
+      - 其它地区
+      - 全部节点
+      - 直连
+
+  # 社交媒体代理组（用于控制 IP 归属地显示）
+  - name: 社交媒体
+    type: select
+    proxies:
+      - 香港
+      - 台湾
+      - 日本
+      - 新加坡
+      - 美国
+      - 直连  # 如果想显示真实 IP，选直连
+
+# 分流规则提供(订阅)组
+rule-providers:
+  # 广告拦截
+  ads:
+    type: http
+    behavior: domain
+    format: yaml
+    path: ./rule_providers/Ads.yaml
+    url: "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockmihomo.yaml"
+    interval: 60480
+  
+  # 社交媒体 IP 归属地控制
+  social-media:
+    type: file
+    behavior: domain
+    path: ./rules/social.yaml
+  
+  # CDN 直连规则
+  cdn-direct:
+    type: file
+    behavior: domain
+    path: ./rules/cdn-direct.yaml
+  
+  # AI 服务
+  ai-services:
+    type: file
+    behavior: domain
+    path: ./rules/ai.yaml
+  
+  # 自定义直连
+  custom-direct:
+    type: file
+    behavior: domain
+    path: ./rules/custom-direct.yaml
+
+# 分流规则
+rules:
+  # 👉 去广告
+  - RULE-SET,ads,REJECT
+  
+  # 👉 本地直连规则
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+  
+  # 👉 自定义直连（机场订阅等）
+  - RULE-SET,custom-direct,DIRECT
+  
+  # 👉 社交媒体 CDN 直连（必须在社交媒体规则之前）
+  - RULE-SET,cdn-direct,DIRECT
+  
+  # 👉 社交媒体 IP 归属地控制
+  - RULE-SET,social-media,社交媒体
+  
+  # 👉 中国直连
+  - GEOSITE,cn,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+  
+  # 👉 AI 服务
+  - RULE-SET,ai-services,AI
+  
+  # 👉 服务专属
+  - GEOSITE,onedrive,OneDrive
+  - GEOSITE,youtube,proxy
+  - GEOSITE,telegram,Telegram
+  - GEOSITE,google,Google
+  - GEOSITE,apple,Apple
+  - GEOSITE,apple-cn,Apple
+  - GEOSITE,microsoft,Microsoft
+  
+  # 👉 GEOIP 补充
+  - GEOIP,google,Google
+  - GEOIP,telegram,Telegram
+  - GEOIP,twitter,Twitter
+  
+  # 👉 兜底
+  - MATCH,proxy
