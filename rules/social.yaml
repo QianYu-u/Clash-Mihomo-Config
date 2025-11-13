@@ -1,0 +1,12 @@
+payload:
+  # 抖音/字节系 - 只代理 API，CDN 已在主配置直连
+  - DOMAIN-SUFFIX,douyin.com
+  - DOMAIN-SUFFIX,toutiao.com
+  - DOMAIN-SUFFIX,snssdk.com
+  - DOMAIN-SUFFIX,pstatp.com
+  
+  # 小红书 - 只代理 API
+  - DOMAIN-SUFFIX,xiaohongshu.com
+  
+  # 微博 - 只代理 API
+  - DOMAIN-SUFFIX,weibo.com

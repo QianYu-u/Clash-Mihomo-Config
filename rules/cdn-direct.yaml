@@ -1,0 +1,16 @@
+payload:
+  # 抖音/字节 CDN 直连
+  - DOMAIN-SUFFIX,douyinpic.com
+  - DOMAIN-SUFFIX,douyinstatic.com
+  - DOMAIN-SUFFIX,douyinvod.com
+  - DOMAIN-SUFFIX,byteimg.com
+  - DOMAIN-SUFFIX,bytedance.com
+  - DOMAIN-KEYWORD,vodcdn
+  - DOMAIN-KEYWORD,imagex
+  
+  # 小红书 CDN 直连
+  - DOMAIN-SUFFIX,xhscdn.com
+  
+  # 微博 CDN 直连
+  - DOMAIN-SUFFIX,weibocdn.com
+  - DOMAIN-SUFFIX,weibo.cn

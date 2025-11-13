@@ -1,0 +1,11 @@
+payload:
+  # 自定义直连域名
+  - DOMAIN-KEYWORD,teams
+  - DOMAIN-SUFFIX,zikaoyou.com
+  - DOMAIN-SUFFIX,shanbay.com
+  - DOMAIN-SUFFIX,baydn.com
+  
+  # 机场订阅直连
+  - DOMAIN-SUFFIX,vfbhg.cn
+  - DOMAIN-SUFFIX,sudatech.store
+  - DOMAIN-KEYWORD,fengwo
